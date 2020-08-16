@@ -43,5 +43,15 @@ var getJSONData = function(url){
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
+
+//Esta función verificará si el usuario se encuentra logeado.
+//Si el usuario no inició sesión, se lo redireccionará a la pagina de login.
+//Si el usuario inició sesión o ya se encuentra en la pagina de login, no ocurrirá la redirección.
 document.addEventListener("DOMContentLoaded", function(e){
+  var sessionEmail = sessionStorage.getItem("inputEmail");
+  var sessionPassword = sessionStorage.getItem("inputPassword");
+  var url = location.href;
+  if(sessionEmail == null && sessionPassword == null && url.indexOf("login.html") == -1){
+    location.replace("login.html");
+};
 });
