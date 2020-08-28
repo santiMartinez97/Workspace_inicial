@@ -1,7 +1,7 @@
 //Función que guarda los datos ingresados en los input de la web.
 function saveData(){
-    var email = document.getElementById("inputEmail").value;
-    sessionStorage.setItem("inputEmail", email);
+    var user = document.getElementById("inputUser").value;
+    sessionStorage.setItem("inputUser", user);
     var password = document.getElementById("inputPassword").value;
     sessionStorage.setItem("inputPassword", password);
 }
@@ -14,9 +14,9 @@ document.addEventListener("DOMContentLoaded", function(e){
     //y, si estos cumplen con la condición, redireccionará a la pagina de inicio de la web.
     document.getElementById("submitData").addEventListener("click", function(){
         saveData();
-        var sessionEmail = sessionStorage.getItem("inputEmail");
+        var sessionUser = sessionStorage.getItem("inputUser");
         var sessionPassword = sessionStorage.getItem("inputPassword");
-        if(sessionEmail.length != 0 && sessionPassword.length != 0){
+        if(sessionUser.length != 0 && sessionPassword.length != 0){
             window.location.href="index.html";
             alert("¡Bienvenido a eMercado! Gracias por elegirnos.");
         };

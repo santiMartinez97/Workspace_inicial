@@ -47,11 +47,15 @@ var getJSONData = function(url){
 //Esta función verificará si el usuario se encuentra logeado.
 //Si el usuario no inició sesión, se lo redireccionará a la pagina de login.
 //Si el usuario inició sesión o ya se encuentra en la pagina de login, no ocurrirá la redirección.
+//El innerHTML agregará el email ingresado por el usuario a la barra de navegación
 document.addEventListener("DOMContentLoaded", function(e){
-  var sessionEmail = sessionStorage.getItem("inputEmail");
+  var sessionUser = sessionStorage.getItem("inputUser");
   var sessionPassword = sessionStorage.getItem("inputPassword");
   var url = location.href;
-  if(sessionEmail == null && sessionPassword == null && url.indexOf("login.html") == -1){
+  var nav = document.getElementsByClassName("container d-flex flex-column flex-md-row justify-content-between")[0];
+  if(sessionUser == null && sessionPassword == null && url.indexOf("login.html") == -1){
     location.replace("login.html");
+}else{
+  nav.innerHTML += `<a class="py-2 d-none d-md-inline-block" href="my-profile.html">` + sessionUser + `</a>`;
 };
 });
