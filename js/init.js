@@ -49,13 +49,25 @@ var getJSONData = function(url){
 //Si el usuario inició sesión o ya se encuentra en la pagina de login, no ocurrirá la redirección.
 //El innerHTML agregará el email ingresado por el usuario a la barra de navegación
 document.addEventListener("DOMContentLoaded", function(e){
-  var sessionUser = sessionStorage.getItem("inputUser");
-  var sessionPassword = sessionStorage.getItem("inputPassword");
+  var localUser = localStorage.getItem("inputUser");
+  var localPassword = localStorage.getItem("inputPassword");
   var url = location.href;
   var nav = document.getElementsByClassName("container d-flex flex-column flex-md-row justify-content-between")[0];
-  if(sessionUser == null && sessionPassword == null && url.indexOf("login.html") == -1){
+  if(localUser == null && localPassword == null && url.indexOf("login.html") == -1){
     location.replace("login.html");
 }else{
-  nav.innerHTML += `<a class="py-2 d-none d-md-inline-block" href="my-profile.html">` + sessionUser + `</a>`;
+  nav.innerHTML += `<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">` + localUser + `
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="my-profile.html">Mi perfil</a></li>
+    <li><a href="login.html" id="remove">Cerrar sesión</a></li>
+  </ul>
+</div>`;
+
+document.getElementById("remove").addEventListener("click", function(e){
+  localStorage.removeItem("inputUser");
+  localStorage.removeItem("inputPassword");
+});
 };
 });
