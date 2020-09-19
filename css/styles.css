@@ -139,3 +139,36 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+.card-body:hover {
+  background-color: rgb(247, 242, 242) !important;
+}
+
+.heading {
+  font-size: 25px;
+  margin-right: 25px;
+}
+
+#averageScore .fa {
+  font-size: 25px !important;
+}
+
+.review-summary-average {
+  color: #333;
+  font-size: 64px;
+  line-height: 48px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.star-container {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.review-summary-average-legend {
+  font-size: 14px;
+  line-height: 18px;
+  color: #333;
+  margin-top: 6px;
+}

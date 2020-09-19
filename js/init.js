@@ -56,13 +56,18 @@ document.addEventListener("DOMContentLoaded", function(e){
   if(localUser == null && localPassword == null && url.indexOf("login.html") == -1){
     location.replace("login.html");
 }else{
+  // Elimina el elemento que incluye la sección de el carrito y lo agrega a un desplegable que incluye
+  // el usuario, perfil y una opción de cerrar sesión.
+  var cart = document.getElementsByTagName("a")[4];
+  cart.parentNode.removeChild(cart);
   nav.innerHTML += `<div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">` + localUser + `
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    <li><a href="my-profile.html">Mi perfil</a></li>
-    <li><a href="login.html" id="remove">Cerrar sesión</a></li>
-  </ul>
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">` + localUser + `
+  </a>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a href="cart.html" class="dropdown-item">Mi carrito</a>
+    <a href="my-profile.html" class="dropdown-item">Mi perfil</a>
+    <a href="login.html" class="dropdown-item" id="remove">Cerrar sesión</a>
+  </div>
 </div>`;
 
 document.getElementById("remove").addEventListener("click", function(e){
