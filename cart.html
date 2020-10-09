@@ -27,13 +27,36 @@
         font-size: 3.5rem;
       }
     }
+
+    input[type="number"] {
+      width: 75px;
+    }
+
+    /* Estilos para tarjeta de credito */
+    /* HIDE RADIO */
+    .creditcard {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* IMAGE STYLES */
+    [type=radio]+img {
+      cursor: pointer;
+    }
+
+    /* CHECKED STYLES */
+    [type=radio]:checked+img {
+      outline: 2px ridge rgb(0, 60, 255);
+    }
   </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
 </head>
 
-<body>
+<body onload="resetSelection()">
   <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
       <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
@@ -43,14 +66,132 @@
       <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 11/10/2020) y Entrega 6 (Fecha de entrega: 25/10/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <main role="main" class="mx-auto" style="width:1150px">
+    <div style="overflow:auto;">
+      <div class="text-center p-4">
+        <h2>Carrito de compras</h2>
+      </div>
+      <div class="d-inline-flex p-2">
+        <table class="blueTable">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Costo p/u</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Subtotal</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="cartContainer">
+            <!--<tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>-->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ship">
+        <h4>Tipo de envío</h4>
+        <form class="container" id="shipType">
+          <input type="radio" id="premium" name="shipping" value="premium" onclick="calculateShipCost(this.value)">
+          <label for="premium">Premium 2 a 5 días (15%)</label><br>
+          <input type="radio" id="express" name="shipping" value="express" onclick="calculateShipCost(this.value)">
+          <label for="express">Express 5 a 8 días (7%)</label><br>
+          <input type="radio" id="standard" name="shipping" value="standard" onclick="calculateShipCost(this.value)">
+          <label for="standard">Standard 12 a 15 días (5%)</label>
+        </form>
+        <hr>
+        <h4>Dirección de envío</h4>
+        <label for="departmentSelect">Departamento</label>
+        <select id="departmentSelect" size="1" onchange="makeSubmenu(this.value)">
+          <option value="" disabled selected>Elige un departamento</option>
+          <option>Artigas</option>
+          <option>Canelones</option>
+          <option>Cerro Largo</option>
+          <option>Colonia</option>
+          <option>Durazno</option>
+          <option>Flores</option>
+          <option>Florida</option>
+          <option>Lavalleja</option>
+          <option>Maldonado</option>
+          <option>Montevideo</option>
+          <option>Paysandú</option>
+          <option>Río Negro</option>
+          <option>Rivera</option>
+          <option>Rocha</option>
+          <option>Salto</option>
+          <option>San José</option>
+          <option>Soriano</option>
+          <option>Tacuarembó</option>
+          <option>Treinta y Tres</option>
+        </select>
+        <br>
+        <label for="citySelect">Localidad</label>
+        <select id="citySelect" size="1" disabled>
+          <option value="" disabled selected>Elige una localidad</option>
+          <option></option>
+        </select>
+        <input class="form-control" id="direction" type="text" placeholder="Ingresar barrio, calle, puerta..."
+          onchange="directionTrue(this.value)">
+        <hr>
+        <h4>Forma de pago</h4>
+        <form style="text-align:center">
+          <label><input type="radio" id="american" class="creditcard" name="payment" value="american"
+              onclick="makeCreditCardTrue()">
+            <img src="img\americanexpress.png" title="American Express"></label>
+          <label><input type="radio" id="mastercard" class="creditcard" name="payment" value="mastercard"
+              onclick="makeCreditCardTrue()">
+            <img src="img\mastercard.png" title="Master Card"></label>
+          <label><input type="radio" id="paypal" class="creditcard" name="payment" value="paypal"
+              onclick="makeCreditCardTrue()">
+            <img src="img\paypal.png" title="Paypal"></label>
+          <label><input type="radio" id="visa" class="creditcard" name="payment" value="visa"
+              onclick="makeCreditCardTrue()">
+            <img src="img\visa.png" title="visa"></label>
+        </form>
+        <input class="form-control" id="cardnumber" type="password" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" onchange="makeCreditNumberTrue(this.value)">
+        <hr>
+        <h4>Costos</h4>
+        <div class="list-group" id="cat-list-container">
+          <div class="costList">
+            <div class="d-flex w-100 justify-content-between">
+              <strong class="mb-1">Subtotal</strong>
+              <small class="text-muted">USD <span id="subtotalCost"></span></small>
+            </div>
+            <p class="mb-1">Costo unitario del producto por cantidad</p>
+          </div>
+          <div class="costList">
+            <div class="d-flex w-100 justify-content-between">
+              <strong class="mb-1">Costo de envío</strong>
+              <small class="text-muted">USD <span id="shipCost">0</span></small>
+            </div>
+            <p class="mb-1">Según el tipo de envío</p>
+          </div>
+          <div class="costList">
+            <div class="d-flex w-100 justify-content-between">
+              <strong class="mb-1">Total (USD)</strong>
+              <strong>USD <span id="totalCost"></span></strong></div>
+          </div>
+        </div>
+        <br>
+        <input type="button" id="purchase" name="purchase" value="Comprar" class="btn btn-lg btn-primary btn-block"
+          onclick="completePurchase()">
+      </div>
     </div>
-  </div>
+    <br>
+  </main>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -59,6 +200,15 @@
       <div></div>
     </div>
   </div>
+  <footer class="text-muted bg-light">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+    </div>
+  </footer>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/dropzone.js"></script>
