@@ -17,12 +17,13 @@ function showCartArtsList(cartArray) {
         <td><img src="` + cartArt.src + `" class="img-thumbnail" width=100px></td>
         <td>` + cartArt.name + `</td>
         <td>` + cartArt.currency + ` <span id="cost` + i + `">` + cartArt.unitCost + `</span></td>
-        <td><input class="form-control" type="number" placeholder="cant." min="0" max="500" maxlength="3" id="inputCant` + i + `" onchange="calculateSubtotalByProduct(this.value,` + i + `)" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"></td>
+        <td><input class="form-control" type="number" placeholder="cant." value="` + cartArt.count + `"min="0" max="500" maxlength="3" id="inputCant` + i + `" onchange="calculateSubtotalByProduct(this.value,` + i + `)" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"></td>
         <td><strong>` + cartArt.currency + ` <span id="subCost` + i + `">` + cartArt.unitCost + `</span></strong></td>
         <td>` + trash + `</td>
       </tr>`
         document.getElementById("cartContainer").innerHTML += htmlContentToAppend;
         document.getElementById("trash").id = "trash" + i;
+        calculateSubtotalByProduct(cartArt.count, i);
     }
     calculateSubtotalTotal();
     totalCost();
