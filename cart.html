@@ -11,6 +11,8 @@
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link href="css/card-js.min.css" rel="stylesheet">
+  <!--saved from https://github.com/CardJs/CardJs-->
 
   <style>
     .bd-placeholder-img {
@@ -30,25 +32,6 @@
 
     input[type="number"] {
       width: 75px;
-    }
-
-    /* Estilos para tarjeta de credito */
-    /* HIDE RADIO */
-    .creditcard {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    /* IMAGE STYLES */
-    [type=radio]+img {
-      cursor: pointer;
-    }
-
-    /* CHECKED STYLES */
-    [type=radio]:checked+img {
-      outline: 2px ridge rgb(0, 60, 255);
     }
   </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -111,6 +94,7 @@
           <label for="express">Express 5 a 8 días (7%)</label><br>
           <input type="radio" id="standard" name="shipping" value="standard" onclick="calculateShipCost(this.value)">
           <label for="standard">Standard 12 a 15 días (5%)</label>
+          <p id="shipError" style="color:red;display:none">Debes seleccionar un tipo de envío.</p>
         </form>
         <hr>
         <h4>Dirección de envío</h4>
@@ -146,22 +130,56 @@
         <input class="form-control" id="direction" type="text" placeholder="Ingresar barrio, calle, puerta..."
           onchange="directionTrue(this.value)">
         <hr>
-        <h4>Forma de pago</h4>
-        <form style="text-align:center">
-          <label><input type="radio" id="american" class="creditcard" name="payment" value="american"
-              onclick="makeCreditCardTrue()">
-            <img src="img\americanexpress.png" title="American Express"></label>
-          <label><input type="radio" id="mastercard" class="creditcard" name="payment" value="mastercard"
-              onclick="makeCreditCardTrue()">
-            <img src="img\mastercard.png" title="Master Card"></label>
-          <label><input type="radio" id="paypal" class="creditcard" name="payment" value="paypal"
-              onclick="makeCreditCardTrue()">
-            <img src="img\paypal.png" title="Paypal"></label>
-          <label><input type="radio" id="visa" class="creditcard" name="payment" value="visa"
-              onclick="makeCreditCardTrue()">
-            <img src="img\visa.png" title="visa"></label>
-        </form>
-        <input class="form-control" id="cardnumber" type="password" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" onchange="makeCreditNumberTrue(this.value)">
+        <div>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Seleccionar forma de pago
+          </button>
+          <p id="paymentFormCompleted" style="color:green;display:none">Completado con éxito.</p>
+          <p id="paymentFormError" style="color:red;display:none">Debe completar.</p>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Forma de pago</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                  <button class="btn btn-primary" id="payWithCard" onclick="changeForm(this.id)">Tarjeta</button><button
+                    class="btn btn-secondary" id="payWithPaypal" onclick="changeForm(this.id)">PayPal</button>
+                  <hr>
+                  <form id="cardForm" style="display:block;">
+                    <p class="text-muted">El formulario detectará automáticamente el tipo de tarjeta.</p>
+                    <div class="card-js" data-icon-colour="#158CBA">
+                      <input class="card-number my-custom-class" id="cardNumber" name="card-number"
+                        placeholder="Número de tarjeta">
+                      <input class="expiry-month" id="cardMonth" name="expiry-month">
+                      <input class="expiry-year" id="cardYear" name="expiry-year">
+                      <input class="cvc" id="cardCvc" name="cvc" title="Introduce el codigo verificador de tu tarjeta"
+                        required>
+                    </div>
+                  </form>
+                  <form id="paypalForm" style="display:none;">
+                    <input type="email" id="paypalEmail" class="paypalInput" name="paypal" placeholder="Email"><br>
+                    <input type="password" id="paypalPassword" class="paypalInput" name="paypal"
+                      placeholder="Contraseña">
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <p id="modalCompleted" style="color:green;display:none">Completado con éxito.</p>
+                  <p id="formError" style="color:red;display:none">Debe completar.</p>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" onclick="savePaymentData()">Guardar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <hr>
         <h4>Costos</h4>
         <div class="list-group" id="cat-list-container">
@@ -188,6 +206,8 @@
         <br>
         <input type="button" id="purchase" name="purchase" value="Comprar" class="btn btn-lg btn-primary btn-block"
           onclick="completePurchase()">
+        <p id="buyError" style="color:red;display:none">Faltan datos. Por favor, revise.</p>
+        <p id="noArtsError" style="color:red;display:none">No hay productos para comprar.</p>
       </div>
     </div>
     <br>
@@ -209,11 +229,19 @@
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>
+  <div class="alert fade" role="alert" id="alertResult">
+    <span id="resultSpan"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/dropzone.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/card-js.min.js"></script>
+  <!--saved from https://github.com/CardJs/CardJs-->
 </body>
 
 </html>

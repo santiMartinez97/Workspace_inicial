@@ -3,10 +3,16 @@ const trash = `<div id="trash" title="Eliminar producto" onclick="deleteProduct(
 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
 </svg></div>`
 var shipValue = "";
-var creditCard = false;
-var creditNumber = false;
+var chosenPayment = "card";
+var paymentCompleted = false;
 var cityData = false;
 var directionData = false;
+let noArts = document.getElementById("noArtsError");
+let buyError = document.getElementById("buyError");
+let paymentForm = document.getElementById("paymentFormError");
+let directionError = document.getElementById("direction");
+let departmentError = document.getElementById("departmentSelect");
+let shipError = document.getElementById("shipError");
 
 //Función que mostrará los artículos del carrito.
 function showCartArtsList(cartArray) {
@@ -73,14 +79,17 @@ function calculateShipCost(value) {
     if (value == "premium") {
         let newShipCost = Math.round(subtotalTotal * 0.15);
         document.getElementById("shipCost").innerHTML = newShipCost;
+        shipError.style.display = "none";
     } else
         if (value == "express") {
             let newShipCost = Math.round(subtotalTotal * 0.07);
             document.getElementById("shipCost").innerHTML = newShipCost;
+            shipError.style.display = "none";
         } else
             if (value == "standard") {
                 let newShipCost = Math.round(subtotalTotal * 0.05);
                 document.getElementById("shipCost").innerHTML = newShipCost;
+                shipError.style.display = "none";
             }
     totalCost();
     shipValue = value;
@@ -114,18 +123,6 @@ function deleteProduct(id) {
     calculateShipCost(shipValue);
 }
 
-function makeCreditCardTrue() {
-    creditCard = true;
-}
-
-function makeCreditNumberTrue(value) {
-    if (value != "") {
-        creditNumber = true;
-    } else {
-        creditNumber = false;
-    }
-}
-
 //Función para desplegables de seleccionar departamento y ciudad.
 var citiesByDepartment = {
     "Artigas": ["Artigas", "Baltasar Brum", "Bella Unión", "Sequeira", "Tomás Gomensoro", "Otro"],
@@ -150,6 +147,7 @@ var citiesByDepartment = {
 }
 function makeSubmenu(value) {
     cityData = true;
+    departmentError.removeAttribute("style");
     //Recibe un valor desde el desplegable de departamentos.
     if (value.length == 0) document.getElementById("citySelect").innerHTML = "<option></option>";
     else {
@@ -166,16 +164,144 @@ function makeSubmenu(value) {
 function directionTrue(value) {
     if (value != "") {
         directionData = true;
+        directionError.removeAttribute("style");
     } else {
         directionData = false;
     }
 }
+
 //Resetea selección al cargar pagina.
 function resetSelection() {
     document.getElementById("departmentSelect").selectedIndex = 0;
     document.getElementById("citySelect").selectedIndex = 0;
 }
 //Terminan funciones para los desplegables de departamentos y ciudades.
+
+//Función que se utiliza en el modal, dependiendo del botón seleccionado mostrará un form u otro.
+function changeForm(id) {
+    var buttonA = document.getElementById("payWithCard");
+    var buttonB = document.getElementById("payWithPaypal")
+    var card = document.getElementById("cardForm");
+    var paypal = document.getElementById("paypalForm");
+    if (id == "payWithCard") {
+        buttonA.className = "btn btn-primary";
+        buttonB.className = "btn btn-secondary";
+        card.style.display = "block";
+        paypal.style.display = "none";
+        chosenPayment = "card";
+    } else {
+        buttonA.className = "btn btn-secondary";
+        buttonB.className = "btn btn-primary";
+        card.style.display = "none";
+        paypal.style.display = "block";
+        chosenPayment = "paypal";
+    }
+}
+
+//Función que evalua si los datos del método de pago están completados.
+function savePaymentData() {
+    var internalCompleted = document.getElementById("modalCompleted")
+    var internalError = document.getElementById("formError");
+    var externalError = document.getElementById("paymentFormError");
+    var externalCompleted = document.getElementById("paymentFormCompleted");
+    if (chosenPayment == "card") {
+        var number = document.getElementById("cardNumber");
+        var expiry = document.getElementById("cardExpiry");
+        var month = document.getElementById("cardMonth");
+        var year = document.getElementById("cardYear");
+        var cvc = document.getElementById("cardCvc");
+        if (number.value.length != 19) {
+            number.style.borderColor = "red";
+        } else {
+            number.removeAttribute("style");
+        }
+        if (month.value == "" || month.value == "0" || year.value.length != 2) {
+            expiry.style.borderColor = "red";
+        } else {
+            expiry.removeAttribute("style");
+        }
+        if (cvc.value.length <= 2) {
+            cvc.style.borderColor = "red";
+        } else {
+            cvc.removeAttribute("style");
+        }
+        if (number.value.length == 19 && month.value != "0" && month.value != "" && year.value.length == 2 && cvc.value.length >= 3) {
+            internalCompleted.style.display = "block";
+            externalCompleted.style.display = "block";
+            internalError.style.display = "none";
+            externalError.style.display = "none";
+            paymentCompleted = true;
+        } else {
+            internalCompleted.style.display = "none";
+            externalCompleted.style.display = "none";
+            internalError.style.display = "block";
+            paymentCompleted = false;
+        }
+    } else {
+        var email = document.getElementById("paypalEmail");
+        var password = document.getElementById("paypalPassword");
+        if (email.value == "" || email.value.indexOf("@") == -1) {
+            email.style.borderColor = "red";
+            password.style.borderColor = "red";
+        } else {
+            email.removeAttribute("style");
+            if (password.value == "") {
+                password.style.borderColor = "red";
+            } else {
+                password.removeAttribute("style");
+            }
+        }
+        if (email.value != "" && email.value.indexOf("@") > -1 && password.value != "") {
+            internalCompleted.style.display = "block";
+            externalCompleted.style.display = "block";
+            internalError.style.display = "none";
+            externalError.style.display = "none";
+            paymentCompleted = true;
+        } else {
+            internalCompleted.style.display = "none";
+            externalCompleted.style.display = "none";
+            internalError.style.display = "block";
+            paymentCompleted = false;
+        }
+    }
+}
+
+function showAlert() {
+    getJSONData(CART_BUY_URL).then(function (resultObj) {
+        let msgToShowHTML = document.getElementById("resultSpan");
+        let msgToShow = "";
+
+        //Si la publicación fue exitosa, devolverá mensaje de éxito,
+        //de lo contrario, devolverá mensaje de error.
+        if (resultObj.status === 'ok') {
+            msgToShow = resultObj.data.msg;
+            document.getElementById("alertResult").classList.add('alert-success');
+        }
+        else if (resultObj.status === 'error') {
+            msgToShow = "Ha habido un error :(, verifica qué pasó.";
+            document.getElementById("alertResult").classList.add('alert-danger');
+        }
+
+        msgToShowHTML.innerHTML = msgToShow;
+        document.getElementById("alertResult").classList.add("show");
+    });
+}
+
+function incompleteData() {
+    buyError.style.display = "block";
+    if (shipValue == "") {
+        shipError.style.display = "block";
+    }
+    if (!paymentCompleted) {
+        paymentForm.style.display = "block";
+    }
+    if (!cityData) {
+        departmentError.style.borderColor = "red";
+    }
+    if (!directionData) {
+        directionError.style.borderColor = "red";
+    }
+}
 
 //Función para el botón de compra.
 function completePurchase() {
@@ -184,42 +310,49 @@ function completePurchase() {
     if (cost0 != undefined && cost1 != undefined) {
         cost0 = cost0.innerHTML;
         cost1 = cost1.innerHTML;
-        if ((cost0 > 0 || cost1 > 0) && cost0 >= 0 && cost1 >= 0 && shipValue != "" && creditCard && creditNumber && cityData && directionData) {
+        if ((cost0 > 0 || cost1 > 0) && cost0 >= 0 && cost1 >= 0 && shipValue != "" && paymentCompleted && cityData && directionData) {
             if (confirm("¿Confirmas tu compra?")) {
-                alert("¡Gracias por la compra!");
-                window.location.href = ("index.html");
+                buyError.style.display = "none";
+                noArts.style.display = "none";
+                showAlert();
             }
         } else if ((cost0 <= 0 && cost1 <= 0) || (cost0 < 0 || cost1 < 0)) {
-            alert("Error, el número de artículos comprados es cero.");
-        } else if (shipValue == "" || !creditCard || !creditNumber || !cityData || !directionData) {
-            alert("Error, faltan datos de envío o forma de pago. Por favor, revisa que estén todos los datos.");
+            noArts.style.display = "block";
+            buyError.style.display = "none";
+        } else {
+            incompleteData();
         }
     } else if (cost0 != undefined && cost1 == undefined) {
         cost0 = cost0.innerHTML;
-        if (cost0 > 0 && shipValue != "" && creditCard && creditNumber && cityData && directionData) {
+        if (cost0 > 0 && shipValue != "" && paymentCompleted && cityData && directionData) {
             if (confirm("¿Confirmas tu compra?")) {
-                alert("¡Gracias por la compra!");
-                window.location.href = ("index.html");
+                buyError.style.display = "none";
+                noArts.style.display = "none";
+                showAlert();
             }
         } else if (cost0 <= 0) {
-            alert("Error, el número de artículos comprados es cero.");
-        } else if (shipValue == "" || !creditCard || !creditNumber || !cityData || !directionData) {
-            alert("Error, faltan datos de envío o forma de pago. Por favor, revisa que estén todos los datos.");
+            noArts.style.display = "block";
+            buyError.style.display = "none";
+        } else {
+            incompleteData();
         }
     } else if (cost0 == undefined && cost1 != undefined) {
         cost1 = cost1.innerHTML;
-        if (cost1 > 0 && shipValue != "" && creditCard && creditNumber && cityData && directionData) {
+        if (cost1 > 0 && shipValue != "" && paymentCompleted && cityData && directionData) {
             if (confirm("¿Confirmas tu compra?")) {
-                alert("¡Gracias por la compra!");
-                window.location.href = ("index.html");
+                buyError.style.display = "none";
+                noArts.style.display = "none";
+                showAlert();
             }
         } else if (cost1 <= 0) {
-            alert("Error, el número de artículos comprados es cero.");
-        } else if (shipValue == "" || !creditCard || !creditNumber || !cityData || !directionData) {
-            alert("Error, faltan datos de envío o forma de pago. Por favor, revisa que estén todos los datos.");
+            noArts.style.display = "block";
+            buyError.style.display = "none";
+        } else {
+            incompleteData();
         }
     } else {
-        alert("Error, no hay artículos en tu carrito.");
+        noArts.style.display = "block";
+        buyError.style.display = "none";
     }
 }
 
