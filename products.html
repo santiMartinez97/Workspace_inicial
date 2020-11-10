@@ -1,113 +1,158 @@
 <!DOCTYPE html>
 <!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <title>eMercado - Todo lo que busques está aquí</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-  </head>
-  <body>
-    <nav class="site-header sticky-top py-1 bg-dark">
-      <div class="container d-flex flex-column flex-md-row justify-content-between">
-        <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
-        <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-        <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-        <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-        <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <title>eMercado - Todo lo que busques está aquí</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <ul class="navbar-nav nav-fill w-100">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="categories.html">Categorías</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="products.html">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="sell.html">Vender</a>
+        </li>
+        <li class="nav-item dropdown">
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a href="cart.html" class="dropdown-item">Mi carrito</a>
+              <a href="my-profile.html" class="dropdown-item">Mi perfil</a>
+              <a href="login.html" class="dropdown-item" id="remove">Cerrar sesión</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <main role="main" class="pb-5">
+    <div class="text-center p-4">
+      <h2>Productos</h2>
+      <p class="lead">Verás aquí todos los productos del sitio.</p>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col text-right">
+          <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
+            <label class="btn btn-light active" id="sortAsc">
+              <input type="radio" name="options" autocomplete="off" checked><svg width="1em" height="1em"
+                viewBox="0 0 16 16" class="bi bi-sort-numeric-down" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M4 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11A.5.5 0 0 1 4 2z" />
+                <path fill-rule="evenodd"
+                  d="M6.354 11.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L4 12.793l1.646-1.647a.5.5 0 0 1 .708 0z" />
+                <path
+                  d="M12.438 7V1.668H11.39l-1.262.906v.969l1.21-.86h.052V7h1.046zm-2.84 5.82c.054.621.625 1.278 1.761 1.278 1.422 0 2.145-.98 2.145-2.848 0-2.05-.973-2.688-2.063-2.688-1.125 0-1.972.688-1.972 1.836 0 1.145.808 1.758 1.719 1.758.69 0 1.113-.351 1.261-.742h.059c.031 1.027-.309 1.856-1.133 1.856-.43 0-.715-.227-.773-.45H9.598zm2.757-2.43c0 .637-.43.973-.933.973-.516 0-.934-.34-.934-.98 0-.625.407-1 .926-1 .543 0 .941.375.941 1.008z" />
+              </svg> USD
+            </label>
+            <label class="btn btn-light" id="sortDesc">
+              <input type="radio" name="options" autocomplete="off"><svg width="1em" height="1em" viewBox="0 0 16 16"
+                class="bi bi-sort-numeric-up-alt" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M4 14a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-1 0v11a.5.5 0 0 0 .5.5z" />
+                <path fill-rule="evenodd"
+                  d="M6.354 4.854a.5.5 0 0 0 0-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L4 3.207l1.646 1.647a.5.5 0 0 0 .708 0z" />
+                <path
+                  d="M9.598 5.82c.054.621.625 1.278 1.761 1.278 1.422 0 2.145-.98 2.145-2.848 0-2.05-.973-2.688-2.063-2.688-1.125 0-1.972.688-1.972 1.836 0 1.145.808 1.758 1.719 1.758.69 0 1.113-.351 1.261-.742h.059c.031 1.027-.309 1.856-1.133 1.856-.43 0-.715-.227-.773-.45H9.598zm2.757-2.43c0 .637-.43.973-.933.973-.516 0-.934-.34-.934-.98 0-.625.407-1 .926-1 .543 0 .941.375.941 1.008zM12.438 14V8.668H11.39l-1.262.906v.969l1.21-.86h.052V14h1.046z" />
+              </svg> USD
+            </label>
+            <label class="btn btn-light" id="sortBySold">
+              <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Más
+              vendidos
+            </label>
+          </div>
+        </div>
       </div>
-    </nav>
-    <main role="main" class="pb-5">
-      <div class="text-center p-4">
-          <h2>Productos</h2>
-          <p class="lead">Verás aquí todos los productos del sitio.</p>
+      <div class="row justify-content-end">
+        <div class="col-md-6"></div>
+        <div class="col-md-6 col-sm-12 mb-1 container">
+          <div class="row container p-0 m-0">
+            <div class="col">
+              <p class="font-weight-normal text-right my-2">Buscar</p>
+            </div>
+            <div class="col">
+              <input class="form-control" type="text" placeholder="Nombre producto" id="searchProd">
+              <input class="form-control" type="text" placeholder="Descripción" id="searchProdDesc">
+            </div>
+          </div>
+        </div>
       </div>
+      <br>
+      <div class="row justify-content-end">
+        <div class="col-md-6"></div>
+        <div class="col-md-6 col-sm-12 mb-1 container">
+          <div class="row container p-0 m-0">
+            <div class="col">
+              <p class="font-weight-normal text-right my-2">Costo</p>
+            </div>
+            <div class="col">
+              <input class="form-control" type="number" placeholder="min." id="rangeFilterCostMin">
+            </div>
+            <div class="col">
+              <input class="form-control" type="number" placeholder="máx." id="rangeFilterCostMax">
+            </div>
+            <div class="col-3 p-0">
+              <div class="btn-group" role="group">
+                <button class="btn btn-light btn-block" id="rangeFilterCost">Filtrar</button>
+                <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="album py-5">
       <div class="container">
-          <div class="row">
-              <div class="col text-right">
-                  <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
-                      <label class="btn btn-light active" id="sortAsc" >
-                          <input type="radio" name="options" autocomplete="off" checked><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-numeric-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11A.5.5 0 0 1 4 2z"/>
-                            <path fill-rule="evenodd" d="M6.354 11.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L4 12.793l1.646-1.647a.5.5 0 0 1 .708 0z"/>
-                            <path d="M12.438 7V1.668H11.39l-1.262.906v.969l1.21-.86h.052V7h1.046zm-2.84 5.82c.054.621.625 1.278 1.761 1.278 1.422 0 2.145-.98 2.145-2.848 0-2.05-.973-2.688-2.063-2.688-1.125 0-1.972.688-1.972 1.836 0 1.145.808 1.758 1.719 1.758.69 0 1.113-.351 1.261-.742h.059c.031 1.027-.309 1.856-1.133 1.856-.43 0-.715-.227-.773-.45H9.598zm2.757-2.43c0 .637-.43.973-.933.973-.516 0-.934-.34-.934-.98 0-.625.407-1 .926-1 .543 0 .941.375.941 1.008z"/>
-                          </svg> USD
-                      </label>
-                      <label class="btn btn-light" id="sortDesc" >
-                          <input type="radio" name="options" autocomplete="off"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-numeric-up-alt" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4 14a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-1 0v11a.5.5 0 0 0 .5.5z"/>
-                            <path fill-rule="evenodd" d="M6.354 4.854a.5.5 0 0 0 0-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L4 3.207l1.646 1.647a.5.5 0 0 0 .708 0z"/>
-                            <path d="M9.598 5.82c.054.621.625 1.278 1.761 1.278 1.422 0 2.145-.98 2.145-2.848 0-2.05-.973-2.688-2.063-2.688-1.125 0-1.972.688-1.972 1.836 0 1.145.808 1.758 1.719 1.758.69 0 1.113-.351 1.261-.742h.059c.031 1.027-.309 1.856-1.133 1.856-.43 0-.715-.227-.773-.45H9.598zm2.757-2.43c0 .637-.43.973-.933.973-.516 0-.934-.34-.934-.98 0-.625.407-1 .926-1 .543 0 .941.375.941 1.008zM12.438 14V8.668H11.39l-1.262.906v.969l1.21-.86h.052V14h1.046z"/>
-                          </svg> USD
-                      </label>
-                      <label class="btn btn-light" id="sortBySold" >
-                          <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Más vendidos
-                      </label>
-                  </div>
-              </div>
-          </div>
-          <div class="row justify-content-end">
-            <div class="col-md-6"></div>
-              <div class="col-md-6 col-sm-12 mb-1 container">
-                <div class="row container p-0 m-0">
-                  <div class="col">
-                    <p class="font-weight-normal text-right my-2">Buscar</p>
-                  </div>
-                  <div class="col">
-                    <input class="form-control" type="text" placeholder="Nombre producto" id="searchProd">
-                    <input class="form-control" type="text" placeholder="Descripción" id="searchProdDesc">
-                  </div>
-                </div>
-              </div>
-          </div>
-          <br>
-          <div class="row justify-content-end">
-            <div class="col-md-6"></div>
-              <div class="col-md-6 col-sm-12 mb-1 container">
-                <div class="row container p-0 m-0">
-                  <div class="col">
-                    <p class="font-weight-normal text-right my-2">Costo</p>
-                  </div>
-                  <div class="col">
-                    <input class="form-control" type="number" placeholder="min." id="rangeFilterCostMin">
-                  </div>
-                  <div class="col">
-                    <input class="form-control" type="number" placeholder="máx." id="rangeFilterCostMax">
-                  </div>
-                  <div class="col-3 p-0">
-                    <div class="btn-group" role="group">
-                      <button class="btn btn-light btn-block" id="rangeFilterCost">Filtrar</button>
-                      <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-          </div>
-          <div class="row">
-              <div class="list-group" id="prod-list-container">
-              </div>
-          </div>
+        <div class="row" id="prod-list-container">
+        </div>
       </div>
+    </div>
   </main>
-    <footer class="text-muted bg-light">
-      <div class="container">
-        <p class="float-right">
-          <a href="#">Volver arriba</a>
-        </p>
-        <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
-        <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
-      </div>
-    </footer>
-    <div id="spinner-wrapper"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/init.js"></script>
-    <script src="js/products.js"></script>
-  </body>
+  <footer class="text-muted bg-light">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+    </div>
+  </footer>
+  <div id="spinner-wrapper">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/products.js"></script>
+</body>
+
 </html>

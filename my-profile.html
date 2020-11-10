@@ -31,38 +31,106 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
-  <nav class="site-header sticky-top py-1 bg-dark">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <ul class="navbar-nav nav-fill w-100">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="categories.html">Categorías</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="products.html">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="sell.html">Vender</a>
+        </li>
+        <li class="nav-item dropdown">
+          <div class="dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a href="cart.html" class="dropdown-item">Mi carrito</a>
+              <a href="my-profile.html" class="dropdown-item">Mi perfil</a>
+              <a href="login.html" class="dropdown-item" id="remove">Cerrar sesión</a>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 7 (Fecha de entrega: 8/11/202020) -> Punto 1 y 2.</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <main role="main" class="pb-5">
+    <div class="text-center p-4">
+      <h2>Mi perfil</h2>
     </div>
-  </div>
+    <div class="container">
+      <form class="profile">
+        <a href="https://imgbb.com/"><img id="happyface" class="profileImage" crossorigin="anonymous"
+            src="https://i.ibb.co/RTwnhwS/C62-M7-Av-U4-AMNPs-Q.jpg" alt="C62-M7-Av-U4-AMNPs-Q" border="0"></a><br />
+        <div class="row container">
+          <div class="col-sm"><label for="inputFName"><b>Primer nombre*</b></label></div>
+          <div class="col-sm"><input type="text" id="inputFName" class="form-control" value="" required
+              oninvalid="invalidData(this.id)" oninput="inputData(this.id)"></div>
+          <div class="col-sm"><label for="inputSName"><b>Segundo nombre</b></label></div>
+          <div class="col-sm"><input type="text" id="inputSName" class="form-control" value=""></div>
+        </div>
+        <hr>
+        <div class="row container">
+          <div class="col-sm"><label for="inputFSurname"><b>Primer apellido*</b></label></div>
+          <div class="col-sm"><input type="text" id="inputFSurname" class="form-control" value="" required
+              oninvalid="invalidData(this.id)" oninput="inputData(this.id)"></div>
+          <div class="col-sm"><label for="inputSSurname"><b>Segundo apellido</b></label></div>
+          <div class="col-sm"><input type="text" id="inputSSurname" class="form-control" value=""></div>
+        </div>
+        <hr>
+        <label for="inputEmail"><b>Correo electrónico*</b></label>
+        <input type="email" id="inputEmail" class="form-control" value="" required oninvalid="invalidData(this.id)"
+          oninput="inputData(this.id)">
+        <hr>
+        <label for="inputPhone"><b>Número de teléfono*</b></label>
+        <input type="number" id="inputPhone" class="form-control" value="" required oninvalid="invalidData(this.id)"
+          oninput="inputData(this.id)">
+        <hr>
+        <label for="inputWebsite"><b>Sitio web</b></label>
+        <input type="text" id="inputWebsite" class="form-control" value="">
+        <hr>
+        <p><b>Género</b></p>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Masculino</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Femenino</label><br>
+        <input type="radio" id="nogender" name="gender" value="nogender">
+        <label for="nogender">Sin especificar</label>
+        <hr>
+        <label for="inputBirthday"><b>Cumpleaños</b></label>
+        <input type="date" id="inputBirthday" class="form-control" min='1900-01-01' value=""
+          oninvalid="invalidData(this.id)" onsubmit="submitData(this.id)">
+        <hr>
+        <label for="inputBiography"><b>Acerca de ti</b></label>
+        <textarea id="inputBiography" class="form-control"></textarea>
+        <hr>
+        <input type="submit" class="btn btn-primary" id="submitProfile" value="Guardar">
+        <input type="button" class="btn btn-secondary" id="cancelSubmitProfile" value="Cancelar">
+      </form>
+    </div>
+  </main>
   <footer class="text-muted bg-light">
     <div class="container">
       <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>
-  <div class="alert fade alert-success" role="alert" id="alertResult">
-    <span id="resultSpan"></span>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>

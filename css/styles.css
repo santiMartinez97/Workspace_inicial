@@ -177,7 +177,7 @@ a.custom-card, a.custom-card:hover {
   margin-top: 6px;
 }
 
-.ship {
+.ship, .profile {
   border: 3px ridge #999999;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -185,9 +185,12 @@ a.custom-card, a.custom-card:hover {
   border-radius: 5px;
   background-color: #f0f8ff;
   padding: 10px;
-  float: right;
   font-family: 'Raleway', serif !important;
   overflow: auto;
+}
+
+.ship{
+  float: right;
 }
 
 .costList {
@@ -245,6 +248,21 @@ table.blueTable tfoot .links a {
   border-radius: 5px;
 }
 
+@media (max-width: 800px){
+  .ship{
+    float: none;
+    max-width: 100%;
+  }
+
+  table{
+    max-width: 90%;
+  }
+
+  .mx-auto{
+    max-width: 100%;
+  }
+}
+
 .paypalInput {
   color: #676767;
   font-size: 15px;
@@ -281,4 +299,13 @@ table.blueTable tfoot .links a {
   border-color: #66afe9;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+}
+
+.profileImage{
+  border-radius: 50%;
+  width: 150px;
+  max-width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
